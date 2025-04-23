@@ -3,7 +3,7 @@ This repository contains Julia code developed for the paper [Locations of JNR sk
 
 Given an initialised skyrmions the method `make_JNR!` allows one to define its pion field by the approximation of Harland-Sutcliffe. In addition, `JNR_positions` and `plot_JNR_positions` allow one to find the locations of consituent JNR skyrmions defined by poles and weights. To use these functions, download `jnr_skyrmions.jl` and in Julia run `include("/.../jnr_skyrmions.jl")`.
 
-`tutorial.jl` demonstrates how the code may be used.
+`tutorial.jl` demonstrates how the code may be used. In addition, all the main functions have been give considerable documentation to aid usability. 
 
 ## Requirements
 I shall not give a complete list of system requirements, but as a rough guideline:

@@ -210,10 +210,10 @@ Method used in make_JNR! when poles are full quaternionic. See the documentation
 
             psi0_p = rho_p*(zeta0^2 + zeta1^2 + zeta2^2 + zeta3^2)
             psi0_m = rho_m*(zeta0^2 + zeta1^2 + zeta2^2 + zeta3^2)
-            psi_m = Quaternion(iota1_m, iota2_m, iota3_m, psi0_m)
-            psi_p_conj = Quaternion(-iota1_p, -iota2_p, -iota3_p, psi0_p)
+            psi_m_conj = Quaternion(-iota1_m, -iota2_m, -iota3_m, psi0_m)
+            psi_p = Quaternion(iota1_p, iota2_p, iota3_p, psi0_p)
 
-            prod = psi_m*psi_p_conj
+            prod = psi_m_conj*psi_p
             norm = abs(prod)
 
             # Note a strange thing is done where the pion 
@@ -302,7 +302,7 @@ Method used in make_JNR! when poles are pure imaginary. See the documentation of
                     ak = poles[K]
                     norm2_xmajpm = mu^2 + (x[1][i]-aj[1])^2 + (x[2][j]-aj[2])^2 + (x[3][k]-aj[3])^2
                     norm2_xmak = ak[4]^2 + (x[1][i]-ak[1])^2 + (x[2][j]-ak[2])^2 + (x[3][k]-ak[3])^2
-                    prefactor = -mu*li*lj*lk/((norm2_xmai+mu^2)*norm2_xmajpm*norm2_xmai*norm2_xmak)
+                    prefactor = mu*li*lj*lk/((norm2_xmai+mu^2)*norm2_xmajpm*norm2_xmai*norm2_xmak)
 
                     # Next calculate the quaternionic part
                     aimaj = Quaternion(ai[1]-aj[1], ai[2]-aj[2], ai[3]-aj[3], ai[4]-aj[4])

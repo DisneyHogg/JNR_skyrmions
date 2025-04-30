@@ -348,7 +348,7 @@ Finds the the points where the Skyrme field of the JNR skyrmions determined by `
 
 ### Output
 
-- `positions` -- array of Point3f data giving the positions of the constituent skyrmions. NOT CORRECT RIGHT NOW FORMAT-WISE
+- `positions` -- array of 3-element Float64 vectors giving the positions of the constituent skyrmions.
 - `signs` -- (only if `multiplicities==true`) array of floats taking values +-1.0 giving the sign of the corresponding constituent skyrmion. 
 
 ### Notes
@@ -359,7 +359,7 @@ For JNR skyrmions with pure imaginary poles the locations of these constituent p
 
 IntervalRootFinding.jl is used to find all roots of zeta, and then removes any solutions which actually contain poles. Positions are then returned as midpoints of intervals. To improve performance the bounding box in which which to search shrunk by a small amount (at most 1E-8, chosen because of the default tolerance taken in IntervalRootFinding). If the positions were within 1e-8 of the poles this would cause errors which one must be alert to, but that would be true because of the root finding tolerance regardless. One might in the future all for this tolerance to be an optional argument. 
 
-If `multiplicities` is true, then the method used to calculate signs is that form the Cork-Disney-Hogg conjecture. 
+If `multiplicities` is true, then the method used to calculate signs is that form the Cork-Disney-Hogg theorem using the Hessian determinant. 
 
 All this requires that the positions be generic, i.e. the local winding number is +-1. In the event that there are coincident positions the numerical position finding can give non-sensical results, and the method for finding the multiplicity will not work. As an example of when this can fail, consider the B=2 case of equal weights where the poles form an equilateral triangle. 
 
@@ -444,8 +444,6 @@ In the case that B=1 and B=2 exact methods for finding the positions are known, 
         # Can replace the use of jacobian here with the analytic expression for
         # dzeta. 
         dzeta(x) = jacobian(zeta, x)
-        # For a mathematically correct version can calculate Xi and find the 
-        # sign of Re(Xi) which is then included as a prefactor. 
         signs = [-sign(det(dzeta(p))) for p in positions]
         return positions, signs
     end

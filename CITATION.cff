@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Location of JNR skyrmions
+message: >-
+  Please cite this software by citing the corresponding
+  research paper.
+type: software
+authors:
+  - given-names: Linden
+    family-names: Disney-Hogg
+    email: a.l.disney-hogg@leeds.ac.uk
+    orcid: 'https://orcid.org/0000-0002-6597-2463'
+    affiliation: University of Leeds
+  - given-names: Josh
+    family-names: Cork
+    email: josh.cork@leicester.ac.uk
+    affiliation: University of Leicester
+    orcid: 'https://orcid.org/0000-0002-9006-0108'
+identifiers:
+  - type: doi
+    value: 10.48550/arXiv.2505.00075
+    description: Link to arXiV preprint
+repository-code: 'https://github.com/DisneyHogg/JNR_skyrmions'

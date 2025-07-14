@@ -20,6 +20,6 @@ authors:
     orcid: 'https://orcid.org/0000-0002-9006-0108'
 identifiers:
   - type: doi
-    value: 10.48550/arXiv.2505.00075
-    description: Link to arXiV preprint
+    value: 10.1007/s11040-025-09513-3
+    description: Link to published file
 repository-code: 'https://github.com/DisneyHogg/JNR_skyrmions'

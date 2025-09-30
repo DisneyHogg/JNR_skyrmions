@@ -35,8 +35,8 @@ include("jnr_skyrmions.jl")
 B = 1
 weights = [1.0, 1.0]
 poles = [Quaternion(0.0, 0.0, 0.0, 0.0) for a in 1:B+1]
-poles[1] = Quaternion(2.0, 0.0, 0.0, 0.0)
-poles[2] = Quaternion(-2.0, 0.0, 0.0, 0.0)
+poles[1] = Quaternion(0.0, 2.0, 0.0, 0.0)
+poles[2] = Quaternion(0.0, -2.0, 0.0, 0.0)
 mu = sqrt(2.0)
 
 # Let's calculate the Baryon number, Energy, and plot the skyrmion. 
@@ -58,8 +58,8 @@ Energy(my_skyrmion)
 # becomes inaccurate, as the approximation uses an "ultradiscrete" 
 # approximation using just 5 discrete points centred at x4=0. 
 for t in LinRange(0.0, 0.5, 6)
-    poles[1] = Quaternion(2, 0.0, 0.0, t)
-    poles[2] = Quaternion(-2, 0.0, 0.0, t)
+    poles[1] = Quaternion(t, 2, 0.0, 0.0)
+    poles[2] = Quaternion(t, -2, 0.0, 0.0)
     make_JNR!(my_skyrmion, poles, weights)
     B = Baryon(my_skyrmion)
     E = Energy(my_skyrmion)
@@ -71,9 +71,9 @@ end
 B = 2
 weights = [1.0, 1.0, 1.0]
 poles = [Quaternion(0.0, 0.0, 0.0, 0.0) for a in 1:B+1]
-poles[1] = Quaternion(2.0, 0.0, 0.0, 0.0)
-poles[2] = Quaternion(-1.0, sqrt(3.0), 0.0, 0.0)
-poles[3] = Quaternion(-1.0, -sqrt(3.0), 0.0, 0.0)
+poles[1] = Quaternion(0.0, 2.0, 0.0, 0.0)
+poles[2] = Quaternion(0.0, -1.0, sqrt(3.0), 0.0)
+poles[3] = Quaternion(0.0, -1.0, -sqrt(3.0), 0.0)
 mu = 2.0
 make_JNR!(my_skyrmion, poles, weights, mu)
 Baryon(my_skyrmion)
@@ -88,10 +88,10 @@ weights = [1.0, 1.0, 1.0, 1.0]
 # to be 1.51. 
 L = 1.51
 poles = [Quaternion(0.0, 0.0, 0.0, 0.0) for a in 1:B+1]
-poles[1] = Quaternion(L, L, L, 0.0)
-poles[2] = Quaternion(L, -L, -L, 0.0)
-poles[3] = Quaternion(-L, L, -L, 0.0)
-poles[4] = Quaternion(-L, -L, L, 0.0)
+poles[1] = Quaternion(0.0, L, L, L)
+poles[2] = Quaternion(0.0, L, -L, -L)
+poles[3] = Quaternion(0.0, -L, L, -L)
+poles[4] = Quaternion(0.0, -L, -L, L)
 # We let the method choose mu, which turns out to be 3.537...
 make_JNR!(my_skyrmion, poles, weights)
 Baryon(my_skyrmion)

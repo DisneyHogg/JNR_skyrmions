@@ -77,7 +77,7 @@ If `mu` is determined automatically, Optim.jl is used to find an appropriate val
     # Note this is a comparison of floats which in general is not a good idea, 
     # but there is no harm other than speed of computation to using the full
     # quaternionic method, so it is not a fatal flaw. 
-    if any(ai->ai[4]!=0.0, poles)
+    if any(ai->ai.s!=0.0, poles)
         # print("Initialising using (2.8)")
         make_JNR_full_quaternionic!(skyrmion, poles, weights, mu)
     else
@@ -156,11 +156,11 @@ Method used in make_JNR! when poles are full quaternionic. See the documentation
                 # so we must do this ourselves
                 # make x - aI and its norm.
                 ai = poles[I]
-                xmai0 = -ai[4]
-                xmai1 = x[1][i]-ai[1]
-                xmai2 = x[2][j]-ai[2]
-                xmai3 = x[3][k]-ai[3]
-                xmai = Quaternion(xmai1, xmai2, xmai3, xmai0)
+                xmai0 = -ai.s
+                xmai1 = x[1][i]-ai.v1
+                xmai2 = x[2][j]-ai.v2
+                xmai3 = x[3][k]-ai.v3
+                xmai = Quaternion(xmai0, xmai1, xmai2, xmai3)
                 norm2_xmai = xmai0^2 + xmai1^2 + xmai2^2 + xmai3^2
                 norm2_xmaipm = (xmai0+mu)^2 + xmai1^2 + xmai2^2 + xmai3^2
                 norm2_xmaimm = (xmai0-mu)^2 + xmai1^2 + xmai2^2 + xmai3^2
@@ -188,30 +188,30 @@ Method used in make_JNR! when poles are full quaternionic. See the documentation
                     lk = weights[K]
                     aj = poles[J]
                     ak = poles[K]
-                    norm2_xmajpm = (mu-aj[4])^2 + (x[1][i]-aj[1])^2 + (x[2][j]-aj[2])^2 + (x[3][k]-aj[3])^2
-                    norm2_xmajmm = (-mu-aj[4])^2 + (x[1][i]-aj[1])^2 + (x[2][j]-aj[2])^2 + (x[3][k]-aj[3])^2
-                    norm2_xmak = ak[4]^2 + (x[1][i]-ak[1])^2 + (x[2][j]-ak[2])^2 + (x[3][k]-ak[3])^2
+                    norm2_xmajpm = (mu-aj.s)^2 + (x[1][i]-aj.v1)^2 + (x[2][j]-aj.v2)^2 + (x[3][k]-aj.v3)^2
+                    norm2_xmajmm = (-mu-aj.s)^2 + (x[1][i]-aj.v1)^2 + (x[2][j]-aj.v2)^2 + (x[3][k]-aj.v3)^2
+                    norm2_xmak = ak.s^2 + (x[1][i]-ak.v1)^2 + (x[2][j]-ak.v2)^2 + (x[3][k]-ak.v3)^2
                     prefactor_p = mu*li*lj*lk/(norm2_xmaipm*norm2_xmajpm*norm2_xmai*norm2_xmak)
                     prefactor_m = -mu*li*lj*lk/(norm2_xmaimm*norm2_xmajmm*norm2_xmai*norm2_xmak)
 
                     # Next calculate the quaternionic part
-                    aimaj = Quaternion(ai[1]-aj[1], ai[2]-aj[2], ai[3]-aj[3], ai[4]-aj[4])
-                    aimak_conj = Quaternion(-ai[1]+ak[1], -ai[2]+ak[2], -ai[3]+ak[3], ai[4]-ak[4])
+                    aimaj = ai - aj
+                    aimak_conj = Quaternion(ai.s-ak.s, -ai.v1+ak.v1, -ai.v2+ak.v2, -ai.v3+ak.v3)
                     prod = aimaj*xmai*aimak_conj
                    
-                    iota1_p += prefactor_p*prod[1]
-                    iota2_p += prefactor_p*prod[2]
-                    iota3_p += prefactor_p*prod[3]
-                    iota1_m += prefactor_m*prod[1]
-                    iota2_m += prefactor_m*prod[2]
-                    iota3_m += prefactor_m*prod[3]
+                    iota1_p += prefactor_p*prod.v1
+                    iota2_p += prefactor_p*prod.v2
+                    iota3_p += prefactor_p*prod.v3
+                    iota1_m += prefactor_m*prod.v1
+                    iota2_m += prefactor_m*prod.v2
+                    iota3_m += prefactor_m*prod.v3
                 end
             end                  
 
             psi0_p = rho_p*(zeta0^2 + zeta1^2 + zeta2^2 + zeta3^2)
             psi0_m = rho_m*(zeta0^2 + zeta1^2 + zeta2^2 + zeta3^2)
-            psi_m_conj = Quaternion(-iota1_m, -iota2_m, -iota3_m, psi0_m)
-            psi_p = Quaternion(iota1_p, iota2_p, iota3_p, psi0_p)
+            psi_m_conj = Quaternion(psi0_m, -iota1_m, -iota2_m, -iota3_m)
+            psi_p = Quaternion(psi0_p, iota1_p, iota2_p, iota3_p)
 
             prod = psi_m_conj*psi_p
             norm = abs(prod)
@@ -222,10 +222,10 @@ Method used in make_JNR! when poles are full quaternionic. See the documentation
             # to the order of how quaternions store their
             # elements in Makie. 
             # This step is valid only if we have imaginary poles
-            skyrmion.pion_field[i,j,k,1] = prod[1]/norm
-            skyrmion.pion_field[i,j,k,2] = prod[2]/norm
-            skyrmion.pion_field[i,j,k,3] = prod[3]/norm
-            skyrmion.pion_field[i,j,k,4] = prod[4]/norm
+            skyrmion.pion_field[i,j,k,1] = prod.v1/norm
+            skyrmion.pion_field[i,j,k,2] = prod.v2/norm
+            skyrmion.pion_field[i,j,k,3] = prod.v3/norm
+            skyrmion.pion_field[i,j,k,4] = prod.s/norm
         end
     end
 end

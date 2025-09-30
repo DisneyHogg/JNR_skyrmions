@@ -273,10 +273,10 @@ Method used in make_JNR! when poles are pure imaginary. See the documentation of
                 # so we must do this ourselves
                 # make x - aI and its norm.
                 ai = poles[I]
-                xmai1 = x[1][i]-ai[1]
-                xmai2 = x[2][j]-ai[2]
-                xmai3 = x[3][k]-ai[3]
-                xmai = Quaternion(xmai1, xmai2, xmai3, 0.0)
+                xmai1 = x[1][i]-ai.v1
+                xmai2 = x[2][j]-ai.v2
+                xmai3 = x[3][k]-ai.v3
+                xmai = Quaternion(0.0, xmai1, xmai2, xmai3)
                 norm2_xmai = xmai1^2 + xmai2^2 + xmai3^2
 
                 # Calculate the contribution to zeta
@@ -300,23 +300,23 @@ Method used in make_JNR! when poles are pure imaginary. See the documentation of
                     lk = weights[K]
                     aj = poles[J]
                     ak = poles[K]
-                    norm2_xmajpm = mu^2 + (x[1][i]-aj[1])^2 + (x[2][j]-aj[2])^2 + (x[3][k]-aj[3])^2
-                    norm2_xmak = ak[4]^2 + (x[1][i]-ak[1])^2 + (x[2][j]-ak[2])^2 + (x[3][k]-ak[3])^2
+                    norm2_xmajpm = mu^2 + (x[1][i]-aj.v1)^2 + (x[2][j]-aj.v2)^2 + (x[3][k]-aj.v3)^2
+                    norm2_xmak = ak.s^2 + (x[1][i]-ak.v1)^2 + (x[2][j]-ak.v2)^2 + (x[3][k]-ak.v3)^2
                     prefactor = mu*li*lj*lk/((norm2_xmai+mu^2)*norm2_xmajpm*norm2_xmai*norm2_xmak)
 
                     # Next calculate the quaternionic part
-                    aimaj = Quaternion(ai[1]-aj[1], ai[2]-aj[2], ai[3]-aj[3], ai[4]-aj[4])
-                    aimak_conj = Quaternion(-ai[1]+ak[1], -ai[2]+ak[2], -ai[3]+ak[3], ai[4]-ak[4])
+                    aimaj = ai-aj
+                    aimak_conj = Quaternion(ai.s-ak.s, -ai.v1+ak.v1, -ai.v2+ak.v2, -ai.v3+ak.v3)
                     prod = aimaj*xmai*aimak_conj
                    
-                    iota1 += prefactor*prod[1]
-                    iota2 += prefactor*prod[2]
-                    iota3 += prefactor*prod[3]
+                    iota1 += prefactor*prod.v1
+                    iota2 += prefactor*prod.v2
+                    iota3 += prefactor*prod.v3
                 end
             end                  
 
             psi0 = rho*(zeta1^2 + zeta2^2 + zeta3^2)
-            psi = Quaternion(iota1, iota2, iota3, psi0)
+            psi = Quaternion(psi0, iota1, iota2, iota3)
             prod = psi*psi
             norm = abs(prod)
 
@@ -326,10 +326,10 @@ Method used in make_JNR! when poles are pure imaginary. See the documentation of
             # to the order of how quaternions store their
             # elements in Makie. 
             # This step is valid only if we have imaginary poles
-            skyrmion.pion_field[i,j,k,1] = prod[1]/norm
-            skyrmion.pion_field[i,j,k,2] = prod[2]/norm
-            skyrmion.pion_field[i,j,k,3] = prod[3]/norm
-            skyrmion.pion_field[i,j,k,4] = prod[4]/norm
+            skyrmion.pion_field[i,j,k,1] = prod.v1/norm
+            skyrmion.pion_field[i,j,k,2] = prod.v2/norm
+            skyrmion.pion_field[i,j,k,3] = prod.v3/norm
+            skyrmion.pion_field[i,j,k,4] = prod.s/norm
         end
     end
 end

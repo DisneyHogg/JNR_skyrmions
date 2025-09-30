@@ -11,9 +11,13 @@
 
 # Do some standard loading for Skyrmions3d
 using Skyrmions3D
-using GLMakie
-GLMakie.activate!()
-Makie.inline!(false)
+
+# Now used for the quatnerion initialisation
+using Quaternions
+# GLMakie no longer used 
+# using GLMakie
+# GLMakie.activate!()
+# Makie.inline!(false)
 
 # We also load packages used in JNR functionality
 using Optim

@@ -116,7 +116,7 @@ Method used in make_JNR! when poles are full quaternionic. See the documentation
 """
     # Pick out the number of lattice points and their
     # values for each of the spatial directions. 
-    lp, x = skyrmion.lp, skyrmion.x
+    lp, x = skyrmion.grid.lp, skyrmion.grid.x
 
     # Find the value of B+1 from the number of poles
     Bp1 = size(poles)[1]
@@ -238,7 +238,7 @@ Method used in make_JNR! when poles are pure imaginary. See the documentation of
 """
     # Pick out the number of lattice points and their
     # values for each of the spatial directions. 
-    lp, x = skyrmion.lp, skyrmion.x
+    lp, x = skyrmion.grid.lp, skyrmion.grid.x
 
     # Find the value of B+1 from the number of poles
     Bp1 = size(poles)[1]

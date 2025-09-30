@@ -32,7 +32,7 @@ If no `mu` is given, the function will determine an appropriate value by optimis
 
 ### Input
 
-- `poles` -- array of Quaternions (from the `GLMakie` package) of size `B+1` for some integer `B`
+- `poles` -- array of Quaternions (from the `Quaternions` package) of size `B+1` for some integer `B`
 - `weights` -- array of (positive) floats of size `B+1`
 - `mu` -- positive float
 
@@ -342,7 +342,7 @@ Finds the the points where the Skyrme field of the JNR skyrmions determined by `
 
 ### Input
 
-- `poles` -- array of  pure imaginary Quaternions (from the `GLMakie` package) of size `B+1` for some integer `B`
+- `poles` -- array of  pure imaginary Quaternions (from the `Quaternions` package) of size `B+1` for some integer `B`
 - `weights` -- array of (positive) floats of size `B+1`
 - `multiplicities` -- (default: false) logical determining whether to provide the multiplicities of positions (when possible) 
 
@@ -460,7 +460,7 @@ Plot the positions of the poles and the skyrmion centres associated to JNR data 
 
 ### Input
 
-- `poles` -- array of  pure imaginary Quaternions (from the `GLMakie` package) of size `B+1` for some integer `B`
+- `poles` -- array of  pure imaginary Quaternions (from the `Quaternions` package) of size `B+1` for some integer `B`
 - `weights` -- array of (positive) floats of size `B+1`
 - `multiplicities` -- (default: false) logical determining whether to provide the multiplicities of positions (when possible) 
 - `with_skyrmion` -- (default: nothing) if a skyrmion is given, its baryon density plot is provided on the same axes as the positions. 

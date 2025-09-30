@@ -381,12 +381,12 @@ In the case that B=1 and B=2 exact methods for finding the positions are known, 
     # end
 
     # Extract the bounding box containing all positions. 
-    xmin = minimum([poles[i][1] for i in 1:Bp1])
-    xmax = maximum([poles[i][1] for i in 1:Bp1])
-    ymin = minimum([poles[i][2] for i in 1:Bp1])
-    ymax = maximum([poles[i][2] for i in 1:Bp1])
-    zmin = minimum([poles[i][3] for i in 1:Bp1])
-    zmax = maximum([poles[i][3] for i in 1:Bp1])
+    xmin = minimum([poles[i].v1 for i in 1:Bp1])
+    xmax = maximum([poles[i].v1 for i in 1:Bp1])
+    ymin = minimum([poles[i].v2 for i in 1:Bp1])
+    ymax = maximum([poles[i].v2 for i in 1:Bp1])
+    zmin = minimum([poles[i].v3 for i in 1:Bp1])
+    zmax = maximum([poles[i].v3 for i in 1:Bp1])
 
     # This shall be an offset to the intervals to prevent NaI in evaluations. 
     dx = min(1E-8, (xmax-xmin)/10)
@@ -408,9 +408,9 @@ In the case that B=1 and B=2 exact methods for finding the positions are known, 
         zeta3 = 0.0
         Threads.@threads for i in 1:Bp1
             ai = poles[i]
-            xmai1 = x-ai[1]
-            xmai2 = y-ai[2]
-            xmai3 = z-ai[3]
+            xmai1 = x-ai.v1
+            xmai2 = y-ai.v2
+            xmai3 = z-ai.v3
             li = weights[i]
             norm2_xmai = xmai1^2 + xmai2^2 + xmai3^2
             zeta1 += li*xmai1/norm2_xmai
@@ -430,7 +430,7 @@ In the case that B=1 and B=2 exact methods for finding the positions are known, 
     # positions = SVector{Float64}[]
     positions = []
     for rt in rts
-        if any(in_interval(ai[1], rt.region[1]) && in_interval(ai[2], rt.region[2]) && in_interval(ai[3], rt.region[3]) for ai in poles)
+        if any(in_interval(ai.v1, rt.region[1]) && in_interval(ai.v2, rt.region[2]) && in_interval(ai.v3, rt.region[3]) for ai in poles)
             continue
         end
         px = (rt.region[1].bareinterval.lo + rt.region[1].bareinterval.hi)/2

@@ -1,8 +1,3 @@
-# For now the best version of Julia to use seems to be 1.9.0
-# One can use juliaup to get this version, namely
-# juliaup add 1.9.0 
-# juliaup default 1.9.0
-
 # In case Skyrmions3d has not been added to Julia, start there
 # ]add https://github.com/chrishalcrow/Skyrmions3D.jl.git
 
@@ -12,12 +7,8 @@
 # Do some standard loading for Skyrmions3d
 using Skyrmions3D
 
-# Now used for the quatnerion initialisation
+# Now used for the quaternion initialisation
 using Quaternions
-# GLMakie no longer used 
-# using GLMakie
-# GLMakie.activate!()
-# Makie.inline!(false)
 
 # We also load packages used in JNR functionality
 using Optim
